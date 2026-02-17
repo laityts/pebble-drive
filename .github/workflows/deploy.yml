@@ -90,42 +90,6 @@ jobs:
           sed -i "s/database_id = \".*\"/database_id = \"$DB_ID\"/" wrangler.toml
         fi
 
-        # 3. 获取或创建 KV Namespace（用于速率限制）
-        echo "🔑 检查 KV Namespace..."
-        KV_ID=$(npx wrangler kv namespace list | grep -E '"title":\s*"RATE_LIMIT"' | grep -v preview | jq -r '.id' || echo "")
-        KV_PREVIEW_ID=$(npx wrangler kv namespace list | grep -E '"title":\s*"RATE_LIMIT_preview"' | jq -r '.id' || echo "")
-
-        if [ -z "$KV_ID" ]; then
-          echo "⚠️ 未找到 RATE_LIMIT KV，正在创建..."
-          KV_ID=$(npx wrangler kv namespace create RATE_LIMIT --json | jq -r '.id')
-          echo "✅ KV Namespace 创建成功: $KV_ID"
-        else
-          echo "✅ 找到 KV ID: $KV_ID"
-        fi
-
-        if [ -z "$KV_PREVIEW_ID" ]; then
-          echo "⚠️ 未找到 RATE_LIMIT_preview KV，正在创建..."
-          KV_PREVIEW_ID=$(npx wrangler kv namespace create RATE_LIMIT --preview --json | jq -r '.id')
-          echo "✅ KV Preview Namespace 创建成功: $KV_PREVIEW_ID"
-        else
-          echo "✅ 找到 KV Preview ID: $KV_PREVIEW_ID"
-        fi
-
-        # 更新 wrangler.toml 中的 KV IDs
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-          # macOS sed 语法
-          sed -i '' "/binding = \"RATE_LIMIT_KV\"/,/preview_id/ {
-            s/id = \".*\"/id = \"$KV_ID\"/
-            s/preview_id = \".*\"/preview_id = \"$KV_PREVIEW_ID\"/
-          }" wrangler.toml
-        else
-          # Linux sed 语法
-          sed -i "/binding = \"RATE_LIMIT_KV\"/,/preview_id/ {
-            s/id = \".*\"/id = \"$KV_ID\"/
-            s/preview_id = \".*\"/preview_id = \"$KV_PREVIEW_ID\"/
-          }" wrangler.toml
-        fi
-
         # 4. 更新配置参数（如果通过 workflow_dispatch 手动触发）
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
           echo "🔧 应用用户自定义配置..."
