@@ -23,9 +23,7 @@ compatibility_date = "2024-01-01"
 # 真实后端 API 地址（必须配置）
 # 示例：BACKEND_URL = "https://your-backend.workers.dev"
 # 你的配置：BACKEND_URL = "https://storage.aydoz.com"
-BACKEND_URL = "YOUR_BACKEND_URL_HERE"
+BACKEND_URL = "https://pebble-drive-api.vlatos.workers.dev"
 
-# 预览环境配置
 [env.preview.vars]
-# 预览环境也可以使用相同的后端，或者使用测试后端
-BACKEND_URL = "YOUR_BACKEND_URL_HERE"
+BACKEND_URL = "https://pebble-drive-api.vlatos.workers.dev"
