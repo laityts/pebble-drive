@@ -19,17 +19,17 @@
 
   // 环境变量（可在部署后修改）
   "vars": {
-    "MAX_FILE_SIZE_MB": "100",
+    "MAX_FILE_SIZE_MB": "1000",
     "STORAGE_QUOTA_GB": "10",
     "BLOCKED_EXTENSIONS": ".exe,.sh,.bat,.cmd,.com,.scr,.msi,.dll,.vbs,.ps1",
-    "UPLOAD_RATE_LIMIT": "50",
+    "UPLOAD_RATE_LIMIT": "200",
     "UPLOAD_RATE_WINDOW": "3600",
 
     // 临时登录密码（部署后必须在 Workers Dashboard 修改！）
-    "AUTH_PASSWORD": "TEMP_PASSWORD_CHANGE_ME",
+    "AUTH_PASSWORD": "Cvjzz9kp",
 
     // JWT 密钥（部署后建议修改为随机值）
-    "AUTH_TOKEN_SECRET": "TEMP_SECRET_PLEASE_CHANGE_THIS_TO_RANDOM_STRING"
+    "AUTH_TOKEN_SECRET": "Q4Dy1mEcxcz3rWgTIwd2pm+4bXETv5O9ycknSf2ETwg="
   },
 
   // R2 对象存储（文件内容）
@@ -44,17 +44,16 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "pebble-drive-db"
+      "database_name": "pebble-drive-db",
+      "database_id": "dbb9ef2c-9c03-4b24-a326-dc466dfe9f29"
     }
   ],
 
   // KV 命名空间（速率限制）
   "kv_namespaces": [
     {
-      "binding": "RATE_LIMIT_KV"
-      // 自动创建命名空间：pebble-drive-RATE_LIMIT_KV
-      // 系统命名规则：{worker-name}-{binding-name}
-      // 如需复用现有 KV，添加 "id": "your-kv-id"
+      "binding": "RATE_LIMIT_KV",
+      "id": "2211b7e44173432d9c010cb554ab39b0"
     }
   ]
 }
